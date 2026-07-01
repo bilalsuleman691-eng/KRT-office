@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StockPro - Premium Office Management</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- ============================================ -->
+    <!-- ============ LOGIN PAGE ===================== -->
+    <!-- ============================================ -->
+    <div id="loginPage" class="login-body">
+        <div class="login-container">
+            <div class="login-box">
+                <div class="login-header">
+                    <h1>📦 StockPro</h1>
+                    <p>Premium Office Management</p>
+                </div>
+                <form id="loginForm">
+                    <div class="input-group">
+                        <label>👤 Username</label>
+                        <input type="text" id="username" placeholder="Enter username" required>
+                    </div>
+                    <div class="input-group">
+                        <label>🔒 Password</label>
+                        <input type="password" id="password" placeholder="Enter password" required>
+                    </div>
+                    <button type="submit" class="btn-premium">Login →</button>
+                </form>
+                <p class="login-footer">v3.0 | Premium Edition</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- ============ DASHBOARD ====================== -->
+    <!-- ============================================ -->
+    <div id="dashboardPage" style="display:none;">
+
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-brand">
+                <h2>📦 StockPro</h2>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="#" class="active" data-page="dashboard">📊 Dashboard</a>
+                <a href="#" data-page="stock-in">📥 Stock In</a>
+                <a href="#" data-page="stock-out">📤 Stock Out</a>
+                <a href="#" data-page="balance">⚖️ Balance</a>
+                <a href="#" data-page="daily-report">📅 Daily Report</a>
+                <a href="#" data-page="search-history">🔍 Search History</a>
+                <a href="#" data-page="account-book">📒 Account Book</a>
+                <a href="#" data-page="rent-book">🏠 Rent Book</a>
+                <a href="#" data-page="settings">⚙️ Settings</a>
+            </nav>
+            <div class="sidebar-footer">
+                <button id="logoutBtn" class="btn-danger">🚪 Logout</button>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+
+            <!-- ===== DASHBOARD PAGE ===== -->
+            <section id="page-dashboard" class="page active">
+                <h1>📊 Dashboard</h1>
+                <div class="stats-grid">
+                    <div class="stat-card" style="border-left: 5px solid #00b894;">
+                        <h3>Total Stock In</h3>
+                        <p id="totalIn">0</p>
+                    </div>
+                    <div class="stat-card" style="border-left: 5px solid #e17055;">
+                        <h3>Total Stock Out</h3>
+                        <p id="totalOut">0</p>
+                    </div>
+                    <div class="stat-card" style="border-left: 5px solid #0984e3;">
+                        <h3>Current Balance</h3>
+                        <p id="totalBalance">0</p>
+                    </div>
+                </div>
+                <div class="quick-actions">
+                    <button class="btn-premium" onclick="navigateTo('stock-in')">📥 Stock In</button>
+                    <button class="btn-premium" onclick="navigateTo('stock-out')">📤 Stock Out</button>
+                    <button class="btn-premium" onclick="navigateTo('balance')">⚖️ Check Balance</button>
+                </div>
+            </section>
+
+            <!-- ===== STOCK IN PAGE ===== -->
+            <section id="page-stock-in" class="page">
+                <h1>📥 Stock In Entry</h1>
+                <div class="form-card large-card">
+                    <form id="stockInForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Item Name *</label>
+                                <input type="text" id="inItem" placeholder="e.g. Cement" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Quantity *</label>
+                                <input type="number" id="inQty" placeholder="Enter qty" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Rate (per unit)</label>
+                                <input type="number" id="inRate" placeholder="Price per unit">
+                            </div>
+                            <div class="form-group">
+                                <label>Supplier / Person</label>
+                                <input type="text" id="inPerson" placeholder="Who gave?">
+                            </div>
+                        </div>
+                        <button type="submit" class="btn-premium">✅ Add Stock In</button>
+                    </form>
+                </div>
+                <div class="table-container">
+                    <h3>Today's Stock In</h3>
+                    <table>
+                        <thead>
+                            <tr><th>Item</th><th>Qty</th><th>Rate</th><th>Person</th><th>Time</th></tr>
+                        </thead>
+                        <tbody id="inTableBody"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- ===== STOCK OUT PAGE ===== -->
+            <section id="page-stock-out" class="page">
+                <h1>📤 Stock Out Entry</h1>
+                <div class="form-card large-card">
+                    <form id="stockOutForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Item Name *</label>
+                                <input type="text" id="outItem" placeholder="e.g. Steel" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Quantity *</label>
+                                <input type="number" id="outQty" placeholder="Enter qty" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Rate (per unit)</label>
+                                <input type="number" id="outRate" placeholder="Price per unit">
+                            </div>
+                            <div class="form-group">
+                                <label>Receiver / Person</label>
+                                <input type="text" id="outPerson" placeholder="Who took?">
+                            </div>
+                        </div>
+                        <button type="submit" class="btn-premium">✅ Add Stock Out</button>
+                    </form>
+                </div>
+                <div class="table-container">
+                    <h3>Today's Stock Out</h3>
+                    <table>
+                        <thead>
+                            <tr><th>Item</th><th>Qty</th><th>Rate</th><th>Person</th><th>Time</th></tr>
+                        </thead>
+                        <tbody id="outTableBody"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- ===== BALANCE PAGE ===== -->
+            <section id="page-balance" class="page">
+                <h1>⚖️ Stock Balance</h1>
+                <div class="form-card">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Search Item</label>
+                            <input type="text" id="balanceSearch" placeholder="Type item name...">
+                        </div>
+                        <div class="form-group" style="display:flex; gap:10px; align-items:flex-end;">
+                            <button class="btn-premium" onclick="searchBalance()">🔍 Search</button>
+                            <button class="btn-premium" onclick="printBalance()">🖨️ Print</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr><th>Item</th><th>Total In</th><th>Total Out</th><th>Balance</th></tr>
+                        </thead>
+                        <tbody id="balanceTableBody"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- ===== DAILY REPORT PAGE ===== -->
+            <section id="page-daily-report" class="page">
+                <h1>📅 Daily Report</h1>
+                <div class="form-card">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>From Date</label>
+                            <input type="date" id="reportFrom">
+                        </div>
+                        <div class="form-group">
+                            <label>To Date</label>
+                            <input type="date" id="reportTo">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Person Name (optional)</label>
+                            <input type="text" id="reportPerson" placeholder="Filter by person">
+                        </div>
+                        <div class="form-group" style="display:flex; gap:10px; align-items:flex-end;">
+                            <button class="btn-premium" onclick="generateReport()">📊 Generate</button>
+                            <button class="btn-premium" onclick="printReport()">🖨️ Print</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="table-container" id="reportResult"></div>
+            </section>
+
+            <!-- ===== SEARCH HISTORY PAGE ===== -->
+            <section id="page-search-history" class="page">
+                <h1>🔍 Search History</h1>
+                <div class="form-card">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>From Date</label>
+                            <input type="date" id="historyFrom">
+                        </div>
+                        <div class="form-group">
+                            <label>To Date</label>
+                            <input type="date" id="historyTo">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Person / Item Name</label>
+                            <input type="text" id="historySearch" placeholder="Search by name or item">
+                        </div>
+                        <div class="form-group" style="display:flex; gap:10px; align-items:flex-end;">
+                            <button class="btn-premium" onclick="searchHistory()">🔍 Search</button>
+                            <button class="btn-premium" onclick="printHistory()">🖨️ Print</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="table-container" id="historyResult"></div>
+            </section>
+
+            <!-- ===== ACCOUNT BOOK PAGE ===== -->
+            <section id="page-account-book" class="page">
+                <h1>📒 Account Book (Munshi / Credit)</h1>
+                <div class="form-card">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Person Name *</label>
+                            <input type="text" id="accPerson" placeholder="Enter name" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Item</label>
+                            <input type="text" id="accItem" placeholder="Item name">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Qty</label>
+                            <input type="number" id="accQty" placeholder="Qty">
+                        </div>
+                        <div class="form-group">
+                            <label>Rate</label>
+                            <input type="number" id="accRate" placeholder="Rate" oninput="calcAccountAmount()">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Total Amount</label>
+                            <input type="number" id="accAmount" placeholder="Auto calculated" readonly>
+                        </div>
+                        <div class="form-group" style="display:flex; align-items:flex-end;">
+                            <button class="btn-premium" onclick="addAccountEntry()">➕ Add Entry</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr><th>Person</th><th>Item</th><th>Qty</th><th>Rate</th><th>Amount</th><th>Date</th><th>Action</th></tr>
+                        </thead>
+                        <tbody id="accountTableBody"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- ===== RENT BOOK PAGE ===== -->
+            <section id="page-rent-book" class="page">
+                <h1>🏠 Rent Book</h1>
+                <div class="form-card">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Tenant Name *</label>
+                            <input type="text" id="rentPerson" placeholder="Enter tenant name" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Month</label>
+                            <input type="month" id="rentMonth">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Rent Amount</label>
+                            <input type="number" id="rentAmount" placeholder="Amount">
+                        </div>
+                        <div class="form-group" style="display:flex; align-items:flex-end;">
+                            <button class="btn-premium" onclick="addRentEntry()">➕ Add Rent</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr><th>Tenant</th><th>Month</th><th>Amount</th><th>Status</th><th>Date</th><th>Action</th></tr>
+                        </thead>
+                        <tbody id="rentTableBody"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- ===== SETTINGS PAGE ===== -->
+            <section id="page-settings" class="page">
+                <h1>⚙️ Settings</h1>
+                <div class="form-card">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Company Name</label>
+                            <input type="text" id="companyName" placeholder="Your Company">
+                        </div>
+                        <div class="form-group">
+                            <label>Currency Symbol</label>
+                            <input type="text" id="currency" placeholder="$ or Rs.">
+                        </div>
+                    </div>
+                    <div style="display:flex; gap:15px; flex-wrap:wrap; margin-top:10px;">
+                        <button class="btn-premium" onclick="saveSettings()">💾 Save Settings</button>
+                        <button class="btn-danger" onclick="clearAllData()">🗑️ Clear All Data</button>
+                    </div>
+                </div>
+            </section>
+
+        </div><!-- end main-content -->
+    </div><!-- end dashboardPage -->
+
+    <script src="script.js"></script>
+</body>
+</html>
